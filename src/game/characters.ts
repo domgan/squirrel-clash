@@ -6,7 +6,7 @@ export const addPlayer = (k: KaboomCtx) => {
     const player = k.add([
         k.sprite(Sprites.RedSquirrel),
         k.pos(320, 375),
-        k.area(),
+        k.area({ scale: 0.6 }),
         k.body(),
         k.scale(0.2)
     ]);
@@ -20,7 +20,7 @@ export const addGreySquirrelSoldier1 = (k: KaboomCtx) => {
     const greySquirrel = k.add([
         k.sprite(Sprites.GreySquirrel),
         k.pos(450, 520),
-        k.area(),
+        k.area({ scale: 0.6 }),
         k.body(),
         k.scale(0.2)
     ]);
@@ -33,7 +33,7 @@ export const addGreySquirrelSoldier2 = (k: KaboomCtx) => {
     const greySquirrel = k.add([
         k.sprite(Sprites.GreySquirrel),
         k.pos(800, 300),
-        k.area(),
+        k.area({ scale: 0.6 }),
         k.body(),
         k.scale(0.2)
     ]);
