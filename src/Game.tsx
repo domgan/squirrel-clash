@@ -25,7 +25,7 @@ const Game = () => {
   }, []);
 
   return (
-    <div style={{ display: "flex", gap: "100px" }}>
+    <div style={{ display: "flex", gap: "100px", margin: "40px" }}>
       <canvas ref={canvasRef} width={SCREEN_WIDTH} height={SCREEN_HEIGHT} />
       <GameInterface isBattle={isBattle} />
     </div>

@@ -1,6 +1,6 @@
 import { KaboomCtx } from "kaboom";
 import { Sprites, Tags } from "./constants";
-import { arrowsMovement, stopMovement } from "./movement";
+import { arrowsMovement } from "./movement";
 import { startBattle } from "./collisionEvents";
 
 export const addPlayer = (k: KaboomCtx) => {

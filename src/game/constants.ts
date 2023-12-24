@@ -1,6 +1,8 @@
 export const SCREEN_WIDTH = 1280;
 export const SCREEN_HEIGHT = 768;
 
+export const SPEED_NORMAL = 300;
+
 export enum Tags {
     Enemy = "enemy",
 }
