@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { LegacyRef, useEffect, useRef, useState } from 'react';
 import kaboom from 'kaboom';
 import kaboomGame from './game/board';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from './game/constants';
@@ -26,7 +26,7 @@ const Game = () => {
 
   return (
     <div style={{ display: "flex", gap: "100px", margin: "40px" }}>
-      <canvas ref={canvasRef} width={SCREEN_WIDTH} height={SCREEN_HEIGHT} />
+      <canvas ref={canvasRef as LegacyRef<HTMLCanvasElement>} width={SCREEN_WIDTH} height={SCREEN_HEIGHT} />
       <GameInterface isBattle={isBattle} />
     </div>
   );

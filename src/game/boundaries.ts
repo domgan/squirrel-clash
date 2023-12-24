@@ -9,7 +9,7 @@ export const generateWalls = (k: KaboomCtx) => {
         { width: k.width(), height: wallThickness, pos: [0, k.height() - wallThickness] }, // Bottom wall
     ];
 
-    const wallEntities = walls.map((wall) =>
+    walls.forEach((wall) =>
         k.add([k.rect(wall.width, wall.height), k.pos(...(wall.pos) as []), k.area(), k.body({ isStatic: true })])
     );
 };
