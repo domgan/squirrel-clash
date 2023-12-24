@@ -1,6 +1,6 @@
 import { KaboomCtx, GameObj } from "kaboom";
 import { Sprites } from "../constants";
-import { getSprite } from "../loadSprites";
+import { getSprite } from "../sprites";
 
 export const setBattleOverlay = async (k: KaboomCtx, leftObj: GameObj, rightObj: GameObj) => {
     k.add([

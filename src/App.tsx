@@ -2,8 +2,8 @@ import Game from './Game';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div style={{ margin: "40px" }}>
+      <header>
         <h1>Squirrel CLASH!</h1>
       </header>
       <main>

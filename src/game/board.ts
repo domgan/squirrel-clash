@@ -1,5 +1,5 @@
 import { KaboomCtx } from "kaboom";
-import loadSprites from "./loadSprites";
+import loadSprites from "./sprites";
 import { Scenes } from "./constants";
 import { registerScenes } from "./scenes";
 import { loadSounds } from "./sounds";

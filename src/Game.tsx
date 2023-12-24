@@ -6,9 +6,8 @@ import GameInterface from './GameInterface';
 
 const Game = () => {
   const canvasRef = useRef<HTMLCanvasElement>();
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const [isBattle, setIsBattle] = useState(false);
-
-  console.log(isBattle);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,11 +21,14 @@ const Game = () => {
     })
 
     kaboomGame(k, setIsBattle)
-  }, []);
+  }, [isGameStarted]);
 
   return (
     <div style={{ display: "flex", gap: "100px", margin: "40px" }}>
-      <canvas ref={canvasRef as LegacyRef<HTMLCanvasElement>} width={SCREEN_WIDTH} height={SCREEN_HEIGHT} />
+      {isGameStarted
+        ? <canvas ref={canvasRef as LegacyRef<HTMLCanvasElement>} width={SCREEN_WIDTH} height={SCREEN_HEIGHT} />
+        : <button onClick={() => setIsGameStarted(true)}>Start the Game!</button>
+      }
       <GameInterface isBattle={isBattle} />
     </div>
   );
