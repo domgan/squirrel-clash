@@ -1,8 +1,58 @@
+import styled from "styled-components";
+import { Skills } from "./game/constants";
+import gameState from "./game/gameState";
+
+const skills = [
+    { name: Skills.Fireball, color: '#FF5733' },
+    { name: Skills.IceShard, color: '#33A1FD' },
+    { name: Skills.Thunderbolt, color: '#FFD700' },
+    { name: Skills.Earthquake, color: '#8B4513' },
+];
+
+const Wrapper = styled.div``;
+
+const SkillsHeader = styled.h2`
+    text-align: center;
+    color: #a7a7a7;
+`;
+
+const SkillsGridContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+`;
+
+const SkillCard = styled.button<{ color: string }>`
+    background-color: ${(props) => props.color};
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+`;
+
 const GameInterface = ({ isBattle }: { isBattle: boolean }) => {
+    const handleSkill = (skillName: Skills) => {
+        gameState.usedSkill = skillName;
+    };
+
     return (
         isBattle
-            ? <a>Battle controls / todo</a>
-            : <a>Map controls / todo</a>
+            ?
+            <Wrapper>
+                <SkillsHeader>Battle Skills</SkillsHeader>
+                <SkillsGridContainer>
+                    {skills.map((skill, index) => (
+                        <SkillCard key={index} color={skill.color} onClick={() => handleSkill(skill.name)}>
+                            {skill.name}
+                        </SkillCard>
+                    ))}
+                </SkillsGridContainer>
+            </Wrapper>
+            :
+            <a>Map controls / todo</a>
     );
 };
 

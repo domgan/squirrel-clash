@@ -24,7 +24,7 @@ const Game = () => {
   }, [isGameStarted]);
 
   return (
-    <div style={{ display: "flex", gap: "100px", margin: "40px" }}>
+    <div style={{ display: "flex", gap: "80px", margin: "40px" }}>
       {isGameStarted
         ? <canvas ref={canvasRef as LegacyRef<HTMLCanvasElement>} width={SCREEN_WIDTH} height={SCREEN_HEIGHT} />
         : <button onClick={() => setIsGameStarted(true)}>Start the Game!</button>
