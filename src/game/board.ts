@@ -1,21 +1,14 @@
 import { KaboomCtx } from "kaboom";
-import { arrowsMovement } from "./movement";
-import { generateWalls } from "./boundaries";
-import { setBackground } from "./background";
-import { addPlayer, addGreySquirrelSoldier1, addGreySquirrelSoldier2 } from "./characters";
+import loadSprites from "./loadSprites";
+import { Scenes } from "./constants";
+import { registerScenes } from "./scenes";
 
-const kaboomGame = (k: KaboomCtx) => {
+const kaboomGame = (k: KaboomCtx, setIsBattle: (b: boolean) => void) => {
     console.log("Rendering canvas...")
+    loadSprites(k);
+    registerScenes(k, setIsBattle);
 
-    setBackground(k);
-    generateWalls(k);
-
-    const player = addPlayer(k);
-    addGreySquirrelSoldier1(k);
-    addGreySquirrelSoldier2(k);
-
-    arrowsMovement(k, player)
-
+    k.go(Scenes.Forest1)
     // k.loop(5, () => {
     //     console.log(player.pos)
     // });

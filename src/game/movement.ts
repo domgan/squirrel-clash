@@ -1,23 +1,27 @@
-import { KaboomCtx, GameObj } from "kaboom";
+import { GameObj } from "kaboom";
 
-export const arrowsMovement = (k: KaboomCtx, obj: GameObj) => {
+export const arrowsMovement = (obj: GameObj) => {
     const playerSpeed = 300;
 
-    k.onKeyDown("left", () => {
+    obj.onKeyDown("left", () => {
         obj.move(-playerSpeed, 0);
         obj.flipX = false;
     });
 
-    k.onKeyDown("right", () => {
+    obj.onKeyDown("right", () => {
         obj.move(playerSpeed, 0);
         obj.flipX = true;
     });
 
-    k.onKeyDown("up", () => {
+    obj.onKeyDown("up", () => {
         obj.move(0, -playerSpeed);
     });
 
-    k.onKeyDown("down", () => {
+    obj.onKeyDown("down", () => {
         obj.move(0, playerSpeed);
     });
+}
+
+export const stopMovement = (obj: GameObj) => {
+    console.log("todo")
 }

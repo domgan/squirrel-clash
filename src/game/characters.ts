@@ -1,8 +1,9 @@
 import { KaboomCtx } from "kaboom";
-import { Sprites } from "./constants";
+import { Sprites, Tags } from "./constants";
+import { arrowsMovement, stopMovement } from "./movement";
+import { startBattle } from "./collisionEvents";
 
 export const addPlayer = (k: KaboomCtx) => {
-    k.loadSprite(Sprites.RedSquirrel, "/generated/red-squirrel.png")
     const player = k.add([
         k.sprite(Sprites.RedSquirrel),
         k.pos(320, 375),
@@ -11,31 +12,35 @@ export const addPlayer = (k: KaboomCtx) => {
         k.scale(0.2)
     ]);
     player.flipX = true;
+    arrowsMovement(player);
+
+    player.onCollide(Tags.Enemy, (enemy) => {
+        startBattle(k, player, enemy)
+    });
+
     return player;
 }
 
-
 export const addGreySquirrelSoldier1 = (k: KaboomCtx) => {
-    k.loadSprite(Sprites.GreySquirrel, "/generated/grey-squirrel-soldier-1.png")
     const greySquirrel = k.add([
-        k.sprite(Sprites.GreySquirrel),
+        k.sprite(Sprites.GreySquirrel1),
         k.pos(450, 520),
         k.area({ scale: 0.6 }),
-        k.body(),
-        k.scale(0.2)
+        k.body({ mass: 10 }),
+        k.scale(0.2),
+        Tags.Enemy
     ]);
-    greySquirrel.flipX = true;
     return greySquirrel;
 }
 
 export const addGreySquirrelSoldier2 = (k: KaboomCtx) => {
-    k.loadSprite(Sprites.GreySquirrel, "/generated/grey-squirrel-soldier-2.png")
     const greySquirrel = k.add([
-        k.sprite(Sprites.GreySquirrel),
+        k.sprite(Sprites.GreySquirrel2),
         k.pos(800, 300),
         k.area({ scale: 0.6 }),
-        k.body(),
-        k.scale(0.2)
+        k.body({ mass: 10 }),
+        k.scale(0.2),
+        Tags.Enemy
     ]);
     return greySquirrel;
 }
