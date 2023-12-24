@@ -20,3 +20,7 @@ export enum Scenes {
     Forest1 = "forest-1",
     Battle = "battle",
 }
+
+export enum Sounds {
+    VivaLaVida = "viva-la-vida"
+}
