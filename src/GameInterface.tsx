@@ -1,7 +1,8 @@
 import { KaboomCtx } from "kaboom";
 import styled from "styled-components";
-import { Skills } from "./game/constants";
-import gameState from "./game/gameState";
+import { Skills, Events } from "./game/constants";
+import charactersState from "./game/characters/charactersState";
+import { useState } from "react";
 
 const skills = [
     { name: Skills.Fireball, color: '#FF5733' },
@@ -37,9 +38,18 @@ const SkillCard = styled.button<{ color: string }>`
 `;
 
 const GameInterface = ({ k, isBattle }: { k: KaboomCtx | null, isBattle: boolean }) => {
-    k && console.log(k.add())
+    console.log(k?.debug.fps());
+    const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+
     const handleSkill = (skillName: Skills) => {
-        gameState.usedSkill = skillName;
+        // const player = Array.from(charactersState.values()).find(gameObj => gameObj instanceof Player);
+        const player = charactersState.playerBattleObj!;
+        player.trigger(Events.PlayerBattleAction, skillName);
+        setIsPlayerTurn(false);
+
+        player.on(Events.EnemyBattleAction, () => {
+            setIsPlayerTurn(true);
+        });
     };
 
     return (
@@ -47,7 +57,7 @@ const GameInterface = ({ k, isBattle }: { k: KaboomCtx | null, isBattle: boolean
             ?
             <Wrapper>
                 <SkillsHeader>Battle Skills</SkillsHeader>
-                <SkillsGridContainer disabled={!gameState.playerTurn}>
+                <SkillsGridContainer disabled={!isPlayerTurn}>
                     {skills.map((skill, index) => (
                         <SkillCard key={index} color={skill.color} onClick={() => handleSkill(skill.name)}>
                             {skill.name}

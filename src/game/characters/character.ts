@@ -41,7 +41,7 @@ export default abstract class Character {
             Tags.Enemy,
         ]);
         this.gameObj.flipX = flipX;
-        charactersState.set(this.gameObj.id!, this);
+        charactersState.gameObjects.set(this.gameObj.id!, this);
     };
 
     takeDamage = (amount: number) => {
@@ -53,7 +53,7 @@ export default abstract class Character {
     isAlive = (): boolean => this.health > 0;
 
     destroy = () => {
-        charactersState.delete(this.gameObj.id!);
+        charactersState.gameObjects.delete(this.gameObj.id!);
         this.gameObj.destroy();
     };
 };

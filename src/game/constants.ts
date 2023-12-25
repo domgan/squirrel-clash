@@ -32,3 +32,8 @@ export enum Skills {
     Thunderbolt = "Thunderbolt",
     Earthquake = "Earthquake",
 }
+
+export enum Events {
+    PlayerBattleAction = "player-battle-action",
+    EnemyBattleAction = "enemy-battle-action",
+}

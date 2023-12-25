@@ -8,6 +8,6 @@ export const startBattle = (k: KaboomCtx, player: GameObj, enemy: GameObj) => {
     stopMovement(player);
     setBattleOverlay(k, player, enemy);
     k.wait(2, () => {
-        k.go(Scenes.Battle, charactersState.get(player.id!), charactersState.get(enemy.id!));
+        k.go(Scenes.Battle, charactersState.gameObjects.get(player.id!), charactersState.gameObjects.get(enemy.id!));
     });
 };

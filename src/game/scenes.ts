@@ -1,5 +1,5 @@
 import { KaboomCtx } from "kaboom";
-import { Scenes } from "./constants";
+import { Events, Scenes, Skills } from "./constants";
 import { setBackground, setBattleBackground } from "./background";
 import { generateWalls } from "./boundaries";
 import Player from "./characters/player";
@@ -7,7 +7,8 @@ import { GreySquirrel1, GreySquirrel2 } from "./characters/greySquirrels";
 import { arrowsMovement } from "./movement";
 import Enemy from "./characters/enemy";
 import { handleSkills } from "./events/onUpdateEvents";
-import { combat } from "./battle/turnBasedCombat";
+import { enemyAction } from "./battle/turnBasedCombat";
+import charactersState from "./characters/charactersState";
 
 export const registerScenes = (k: KaboomCtx, setIsBattle: (b: boolean) => void) => {
     k.scene(Scenes.Forest1, () => {
@@ -34,8 +35,12 @@ export const registerScenes = (k: KaboomCtx, setIsBattle: (b: boolean) => void) 
 
         const playerBattleObj = player.battleSpawn();
         const enemyBattleObj = enemy.battleSpawn();
+        charactersState.playerBattleObj = playerBattleObj;
 
-        playerBattleObj.onUpdate(() => handleSkills(k, playerBattleObj, enemyBattleObj));
-        playerBattleObj.onUpdate(() => combat(k, playerBattleObj, enemyBattleObj));
+        playerBattleObj.on(Events.PlayerBattleAction, (skill: Skills) => {
+            handleSkills(k, skill, playerBattleObj, enemyBattleObj);
+            enemyAction(k, playerBattleObj);
+        });
+        // playerBattleObj.onUpdate(() => combat(k, playerBattleObj, enemyBattleObj));
     });
 };

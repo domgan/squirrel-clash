@@ -1,17 +1,12 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
 import { launchFireball } from "../battle/skills";
 import { Skills } from "../constants";
-import gameState, { listenForSkill } from "../gameState";
 
-export const handleSkills = (k: KaboomCtx, player: GameObj, enemy: GameObj) => {
-    const skill = listenForSkill();
+export const handleSkills = (k: KaboomCtx, skill: Skills, player: GameObj, enemy: GameObj) => {
     switch (skill) {
         case Skills.Fireball:
             launchFireball(k, player, enemy);
-    };
-    if (skill) {
-        gameState.playerTurn = false
-        k.wait(3);
+        // todo: rest of skills
     };
 };
 
