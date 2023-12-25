@@ -1,3 +1,4 @@
+import { KaboomCtx } from "kaboom";
 import styled from "styled-components";
 import { Skills } from "./game/constants";
 import gameState from "./game/gameState";
@@ -16,15 +17,17 @@ const SkillsHeader = styled.h2`
     color: #a7a7a7;
 `;
 
-const SkillsGridContainer = styled.div`
+const SkillsGridContainer = styled.div<{ disabled: boolean }>`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     max-width: 600px;
+    opacity: ${props => props.disabled ? 0.5 : 1};
+    pointer-events: ${props => props.disabled ? 'none' : 'auto'};
 `;
 
 const SkillCard = styled.button<{ color: string }>`
-    background-color: ${(props) => props.color};
+    background-color: ${props => props.color};
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -33,7 +36,8 @@ const SkillCard = styled.button<{ color: string }>`
     font-weight: bold;
 `;
 
-const GameInterface = ({ isBattle }: { isBattle: boolean }) => {
+const GameInterface = ({ k, isBattle }: { k: KaboomCtx | null, isBattle: boolean }) => {
+    k && console.log(k.add())
     const handleSkill = (skillName: Skills) => {
         gameState.usedSkill = skillName;
     };
@@ -43,7 +47,7 @@ const GameInterface = ({ isBattle }: { isBattle: boolean }) => {
             ?
             <Wrapper>
                 <SkillsHeader>Battle Skills</SkillsHeader>
-                <SkillsGridContainer>
+                <SkillsGridContainer disabled={!gameState.playerTurn}>
                     {skills.map((skill, index) => (
                         <SkillCard key={index} color={skill.color} onClick={() => handleSkill(skill.name)}>
                             {skill.name}

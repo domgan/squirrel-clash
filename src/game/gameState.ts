@@ -2,8 +2,14 @@ import { Skills } from "./constants";
 
 const NO_SKILL_EVENT = "";
 
-const gameState = {
+type GameState = {
+    usedSkill: Skills | "",
+    playerTurn: boolean
+};
+
+const gameState: GameState = {
     usedSkill: NO_SKILL_EVENT,
+    playerTurn: true
 };
 
 export const listenForSkill = (): Skills => {

@@ -1,15 +1,9 @@
 import { KaboomCtx, GameObj } from "kaboom";
+import { handleSendProjectile } from "../events/onUpdateEvents";
 
-export const launchFireball = (k: KaboomCtx, from: GameObj, to: GameObj) => {
-    const fireballSpeed = 300;
-
-    const fireball = k.add([
-        k.sprite("fireball"),
-        k.pos(from.pos.x, from.pos.y),
-        k.scale(0.3)
-    ]);
-    fireball.flipX = true;
-    fireball.flipY = true;
+export const launchFireball = (k: KaboomCtx, from: GameObj, to: GameObj, down: boolean = false) => {
+    const fireballSpeed = 400;
+    const fireball = addFireballObject(k, from, down);
 
     const direction = k.vec2(
         to.pos.x - from.pos.x,
@@ -18,14 +12,18 @@ export const launchFireball = (k: KaboomCtx, from: GameObj, to: GameObj) => {
     const distance = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
     const normalizedDirection = k.vec2(direction.x / distance, direction.y / distance);
 
-    fireball.onUpdate(() => {
-        fireball.move(normalizedDirection.x * fireballSpeed, normalizedDirection.y * fireballSpeed);
-        const distanceToTarget = Math.sqrt(
-            (fireball.pos.x - to.pos.x) ** 2 + (fireball.pos.y - to.pos.y) ** 2
-        );
+    fireball.onUpdate(() => handleSendProjectile(fireball, to, normalizedDirection, fireballSpeed));
+};
 
-        if (distanceToTarget < 100) {
-            fireball.destroy();
-        }
-    });
+const addFireballObject = (k: KaboomCtx, sourceObj: GameObj, down: boolean) => {
+    const fireball = k.add([
+        k.sprite("fireball"),
+        k.pos(sourceObj.pos.x, sourceObj.pos.y),
+        k.scale(0.3)
+    ]);
+    if (!down) {
+        fireball.flipX = true;
+        fireball.flipY = true;
+    };
+    return fireball;
 };
