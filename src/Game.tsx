@@ -37,7 +37,7 @@ const Game = () => {
       ?
       <GameContainer>
         <canvas ref={canvasRef as LegacyRef<HTMLCanvasElement>} width={SCREEN_WIDTH} height={SCREEN_HEIGHT} />
-        <GameInterface k={kInstance} isBattle={isBattle} />
+        <GameInterface k={kInstance} canvasRef={canvasRef} isBattle={isBattle} />
       </GameContainer>
       : <button onClick={() => setIsGameStarted(true)}>Start the Game!</button>
   );

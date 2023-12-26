@@ -10,10 +10,15 @@ export default abstract class Enemy extends Character {
     };
 
     battleSpawn = () => {
-        return this.k.add([
+        this.battleGameObj = this.k.add([
             this.k.sprite(this.sprite),
             this.k.pos(2.5 * this.k.width() / 4, 250),
             this.k.scale(0.2)
         ]);
     };
+
+    spawn(): void {
+        super.spawn();
+        this.registerEvents();
+    }
 }

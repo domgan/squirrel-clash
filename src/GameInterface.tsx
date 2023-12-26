@@ -1,8 +1,9 @@
 import { KaboomCtx } from "kaboom";
 import styled from "styled-components";
 import { Skills, Events } from "./game/constants";
-import charactersState from "./game/characters/charactersState";
-import { useState } from "react";
+import charactersState from "./game/gameState";
+import { MutableRefObject, useEffect, useState } from "react";
+import Player from "./game/characters/player";
 
 const skills = [
     { name: Skills.Fireball, color: '#FF5733' },
@@ -39,20 +40,34 @@ const SkillCard = styled.button<{ color: string }>`
     font-weight: bold;
 `;
 
-const GameInterface = ({ k, isBattle }: { k: KaboomCtx | null, isBattle: boolean }) => {
+const getPlayerFromState = (): Player => {
+    return Array.from(charactersState.gameObjects.values()).find(gameObj => gameObj instanceof Player)!;
+};
+
+type GameInterfaceProps = {
+    k: KaboomCtx | null,
+    canvasRef: MutableRefObject<HTMLCanvasElement | undefined>,
+    isBattle: boolean
+};
+
+const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
     console.log(k?.debug.fps());
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
 
     const handleSkill = (skillName: Skills) => {
-        // const player = Array.from(charactersState.values()).find(gameObj => gameObj instanceof Player);
-        const player = charactersState.playerBattleObj!;
-        player.trigger(Events.PlayerBattleAction, skillName);
+        const player = getPlayerFromState();
+        player.battleGameObj.trigger(Events.PlayerBattleAction, skillName);
         setIsPlayerTurn(false);
 
-        player.on(Events.EnemyBattleAction, () => {
+        player.battleGameObj.on(Events.EnemyBattleAction, () => {
             setIsPlayerTurn(true);
         });
     };
+
+    useEffect(() => {
+        if (!isBattle)
+            canvasRef.current?.focus()
+    }, [isBattle]);
 
     return (
         isBattle
