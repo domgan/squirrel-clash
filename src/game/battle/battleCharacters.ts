@@ -1,6 +1,6 @@
 import { KaboomCtx, GameObj } from "kaboom";
 import { Sprites } from "../constants";
-import { getSprite } from "../sprites";
+import { getSprite } from "../loaders/sprites";
 
 export const addBattlePlayer = (k: KaboomCtx) => {
     const player = k.add([

@@ -1,6 +1,7 @@
 import { KaboomCtx, Vec2, GameObj, AreaComp, BodyComp, PosComp, ScaleComp, SpriteComp } from "kaboom";
 import { Sprites, Tags } from "../constants";
 import charactersState from "./charactersState";
+import Movement from "./movement";
 
 export default abstract class Character {
     protected k: KaboomCtx;
@@ -13,6 +14,7 @@ export default abstract class Character {
 
     abstract health: number;
     public gameObj: GameObj<SpriteComp | PosComp | ScaleComp | AreaComp | BodyComp>;
+    public movement: Movement;
 
     constructor(
         k: KaboomCtx,
@@ -26,7 +28,10 @@ export default abstract class Character {
         this.mass = mass;
         this.scale = scale;
         this.areaScale = areaScale;
+
+        // todo: don't initialize like this
         this.gameObj = this.k.make();
+        this.movement = new Movement(this.gameObj);
     }
 
     abstract battleSpawn: () => GameObj;
@@ -41,7 +46,9 @@ export default abstract class Character {
             Tags.Enemy,
         ]);
         this.gameObj.flipX = flipX;
+
         charactersState.gameObjects.set(this.gameObj.id!, this);
+        this.movement = new Movement(this.gameObj);
     };
 
     takeDamage = (amount: number) => {

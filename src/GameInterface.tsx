@@ -11,9 +11,11 @@ const skills = [
     { name: Skills.Earthquake, color: '#8B4513' },
 ];
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+    min-width: 200px;
+`;
 
-const SkillsHeader = styled.h2`
+const Header = styled.h2`
     text-align: center;
     color: #a7a7a7;
 `;
@@ -56,7 +58,7 @@ const GameInterface = ({ k, isBattle }: { k: KaboomCtx | null, isBattle: boolean
         isBattle
             ?
             <Wrapper>
-                <SkillsHeader>Battle Skills</SkillsHeader>
+                <Header>Battle Skills</Header>
                 <SkillsGridContainer disabled={!isPlayerTurn}>
                     {skills.map((skill, index) => (
                         <SkillCard key={index} color={skill.color} onClick={() => handleSkill(skill.name)}>
@@ -66,7 +68,10 @@ const GameInterface = ({ k, isBattle }: { k: KaboomCtx | null, isBattle: boolean
                 </SkillsGridContainer>
             </Wrapper>
             :
-            <a>Map controls / todo</a>
+            <Wrapper>
+                <Header>Map controls</Header>
+                <a>Use arrows!</a>
+            </Wrapper>
     );
 };
 

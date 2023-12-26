@@ -1,6 +1,6 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
-import { launchFireball } from "../battle/skills";
-import { Skills } from "../constants";
+import { launchFireball } from "../skills";
+import { Skills } from "../../constants";
 
 export const handleSkills = (k: KaboomCtx, skill: Skills, player: GameObj, enemy: GameObj) => {
     switch (skill) {

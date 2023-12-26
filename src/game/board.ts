@@ -1,8 +1,8 @@
 import { KaboomCtx } from "kaboom";
-import loadSprites from "./sprites";
+import loadSprites from "./loaders/sprites";
 import { Scenes } from "./constants";
-import { registerScenes } from "./scenes";
-import { loadSounds } from "./sounds";
+import { registerScenes } from "./loaders/scenes";
+import { loadSounds } from "./loaders/sounds";
 
 const kaboomGame = (k: KaboomCtx, setIsBattle: (b: boolean) => void) => {
     console.log("Rendering canvas...")

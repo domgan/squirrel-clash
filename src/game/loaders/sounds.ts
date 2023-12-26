@@ -1,5 +1,5 @@
 import { KaboomCtx } from "kaboom";
-import { Sounds } from "./constants";
+import { Sounds } from "../constants";
 
 export const loadSounds = (k: KaboomCtx) => {
     k.loadRoot("/squirrel-clash/");

@@ -1,5 +1,5 @@
 import { KaboomCtx, GameObj } from "kaboom";
-import { Sprites } from "./constants";
+import { Sprites } from "../constants";
 
 const loadSprites = (k: KaboomCtx) => {
     k.loadRoot("/squirrel-clash/")

@@ -1,5 +1,5 @@
 import { KaboomCtx, GameObj } from "kaboom";
-import { handleSendProjectile } from "../events/onUpdateEvents";
+import { handleSendProjectile } from "./events/onUpdateEvents";
 
 export const launchFireball = (k: KaboomCtx, from: GameObj, to: GameObj, down: boolean = false) => {
     const fireballSpeed = 400;

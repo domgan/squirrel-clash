@@ -1,5 +1,5 @@
 import Character from "./character";
-import { startBattle } from "../events/collisionEvents";
+import { startBattle } from "../map/events/collisionEvents";
 import { Tags } from "../constants";
 
 export default abstract class Enemy extends Character {
