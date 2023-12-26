@@ -11,4 +11,11 @@ const charactersState: CharactersState = {
     gameObjects: new Map<GameObjID, Character>()
 };
 
+export const restoreCharacters = () => {
+    const gameObjects = charactersState.gameObjects;
+    charactersState.gameObjects = new Map();
+    Array.from(gameObjects.values()).forEach(gameObj => gameObj.spawn());
+    return;
+};
+
 export default charactersState;

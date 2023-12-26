@@ -4,7 +4,7 @@ import { GreySquirrel1, GreySquirrel2 } from "../characters/greySquirrels";
 import Player from "../characters/player";
 import { generateWalls } from "../common/boundaries";
 import { Scenes } from "../constants";
-import charactersState from "../gameState";
+import { restoreCharacters } from "../gameState";
 
 export const forest1Scene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) => {
     k.scene(Scenes.Forest1, (wasInitialized: boolean | undefined) => {
@@ -13,7 +13,7 @@ export const forest1Scene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) =>
         generateWalls(k);
 
         if (wasInitialized) {
-            Array.from(charactersState.gameObjects.values()).forEach(gameObj => gameObj.spawn());
+            restoreCharacters();
             return;
         };
 

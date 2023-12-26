@@ -5,7 +5,7 @@ import { Tags } from "../constants";
 export default abstract class Enemy extends Character {
     registerEvents = () => {
         this.gameObj.onCollide(Tags.Enemy, player => {
-            startBattle(this.k, player, this.gameObj)
+            startBattle(this.k, player, this.gameObj);
         });
     };
 
