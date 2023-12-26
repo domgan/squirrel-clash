@@ -1,9 +1,9 @@
 import { KaboomCtx } from "kaboom";
 import styled from "styled-components";
-import { Skills, Events } from "./game/constants";
-import charactersState from "./game/gameState";
+import { Skills, Events, Tags } from "./game/constants";
 import { MutableRefObject, useEffect, useState } from "react";
 import Player from "./game/characters/player";
+import Enemy from "./game/characters/enemy";
 
 const skills = [
     { name: Skills.Fireball, color: '#FF5733' },
@@ -40,9 +40,9 @@ const SkillCard = styled.button<{ color: string }>`
     font-weight: bold;
 `;
 
-const getPlayerFromState = (): Player => {
-    return Array.from(charactersState.gameObjects.values()).find(gameObj => gameObj instanceof Player)!;
-};
+// const getPlayerFromState = (): Player => {
+//     return Array.from(charactersState.gameObjects.values()).find(gameObj => gameObj instanceof Player)!;
+// };
 
 type GameInterfaceProps = {
     k: KaboomCtx | null,
@@ -51,22 +51,46 @@ type GameInterfaceProps = {
 };
 
 const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
-    console.log(k?.debug.fps());
+    k?.debug.fps();
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+    const [player, setPlayer] = useState<Player>();
+    const [enemy, setEnemy] = useState<Enemy>();
+    const [updateTrigger, setUpdateTrigger] = useState(false);
+
+    useEffect(() => {
+        // todo: bug - why this doesn't get triggered for a second battle
+        k?.on(Events.StartBattle, Tags.Player, (_, player, enemy: Enemy) => {
+            console.log(`ENEMY: ${enemy.battleGameObj.id}`)
+            setPlayer(player);
+            setEnemy(enemy);
+        });
+    }, [k]);
 
     const handleSkill = (skillName: Skills) => {
-        const player = getPlayerFromState();
-        player.battleGameObj.trigger(Events.PlayerBattleAction, skillName);
+        // console.log(player?.battleGameObj.health);
+        player?.battleGameObj.trigger(Events.PlayerBattleAction, skillName);
         setIsPlayerTurn(false);
 
-        player.battleGameObj.on(Events.EnemyBattleAction, () => {
+        player?.battleGameObj.on(Events.PlayerBattleActionFinished, () => {
+            setUpdateTrigger(!updateTrigger);
+        });
+
+        player?.battleGameObj.on(Events.EnemyBattleActionFinished, () => {
+            setIsPlayerTurn(true);
+        });
+
+        player?.battleGameObj.on(Events.EnemyBattleAction, () => {
+            setUpdateTrigger(!updateTrigger);
+        });
+
+        player?.battleGameObj.on(Events.EndBattle, () => {
             setIsPlayerTurn(true);
         });
     };
 
     useEffect(() => {
-        if (!isBattle)
-            canvasRef.current?.focus()
+        if (!isBattle) // todo: move to state set by event
+            canvasRef.current?.focus();
     }, [isBattle]);
 
     return (
@@ -81,6 +105,7 @@ const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
                         </SkillCard>
                     ))}
                 </SkillsGridContainer>
+                <a>Player HP: {player?.health} | Enemy HP: {enemy?.health}</a>
             </Wrapper>
             :
             <Wrapper>

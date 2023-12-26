@@ -4,6 +4,8 @@ export const SCREEN_HEIGHT = 768;
 export const SPEED_NORMAL = 300;
 
 export enum Tags {
+    Character = "character",
+    Player = "player",
     Enemy = "enemy",
 }
 
@@ -34,6 +36,10 @@ export enum Skills {
 }
 
 export enum Events {
+    StartBattle = "start-battle",
+    EndBattle = "end-battle",
     PlayerBattleAction = "player-battle-action",
+    PlayerBattleActionFinished = "player-battle-action-finished",
     EnemyBattleAction = "enemy-battle-action",
+    EnemyBattleActionFinished = "enemy-battle-action-finished",
 }

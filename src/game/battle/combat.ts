@@ -13,11 +13,15 @@ export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: 
     handleSkills(k, skill, player.battleGameObj, enemy.battleGameObj);
     await k.wait(ANIMATION_TIME);
     enemy.takeDamage(BASE_DAMAGE);
+    player.battleGameObj.trigger(Events.PlayerBattleActionFinished, player, enemy)
 
-    if (enemy.isAlive())
+    if (enemy.isAlive()) {
+        player.battleGameObj.trigger(Events.EnemyBattleAction, player, enemy);
         await enemyAction(k, player, enemy);
+        player.battleGameObj.trigger(Events.EnemyBattleActionFinished, player, enemy);
+    }
     else {
-        player.battleGameObj.trigger(Events.EnemyBattleAction);
+        player.battleGameObj.trigger(Events.EndBattle, player, enemy);
         k.go(Scenes.Forest1, true);
     }
 };
@@ -27,6 +31,4 @@ const enemyAction = async (k: KaboomCtx, player: Player, enemy: Enemy) => {
     launchFireball(k, enemy.battleGameObj, player.battleGameObj, true)
     await k.wait(ANIMATION_TIME);
     player.takeDamage(BASE_DAMAGE);
-
-    player.battleGameObj.trigger(Events.EnemyBattleAction);
 };

@@ -38,15 +38,18 @@ export default abstract class Character {
     }
 
     abstract battleSpawn: () => void;
+    abstract registerEvents: () => void;
+    abstract spawn: () => void;
 
-    spawn(flipX: boolean = false) {
+    protected doSpawn(tag: Tags, flipX: boolean = false) {
         this.gameObj = this.k.add([
             this.k.sprite(this.sprite),
             this.k.pos(this.position),
             this.k.area({ scale: this.areaScale }),
             this.k.body({ mass: this.mass }),
             this.k.scale(this.scale),
-            Tags.Enemy,
+            Tags.Character,
+            tag
         ]);
         this.gameObj.flipX = flipX;
 
