@@ -1,5 +1,5 @@
 import { KaboomCtx } from "kaboom";
-import { setBackground } from "../background";
+import { setBackground, setDefeatedBackground } from "../background";
 import { GreySquirrel1, GreySquirrel2 } from "../characters/greySquirrels";
 import Player from "../characters/player";
 import { generateWalls } from "../common/boundaries";
@@ -24,5 +24,11 @@ export const forest1Scene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) =>
         player.spawn();
         sq1.spawn();
         sq2.spawn();
+    });
+};
+
+export const defeatedScene = (k: KaboomCtx) => {
+    k.scene(Scenes.Defeated, () => {
+        setDefeatedBackground(k);
     });
 };

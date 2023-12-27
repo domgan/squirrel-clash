@@ -5,9 +5,11 @@ import Enemy from "./enemy";
 export class GreySquirrel1 extends Enemy {
     sprite = Sprites.GreySquirrel1;
     health = 100;
+    maxHealth = 100;
 };
 
 export class GreySquirrel2 extends Enemy {
     sprite = Sprites.GreySquirrel2;
     health = 100;
+    maxHealth = 100;
 };

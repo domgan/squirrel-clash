@@ -4,6 +4,7 @@ import { Skills, Events, Tags } from "./game/constants";
 import { MutableRefObject, useEffect, useState } from "react";
 import Player from "./game/characters/player";
 import Enemy from "./game/characters/enemy";
+import HealthDisplay from "./components/HealthDisplay";
 
 const skills = [
     { name: Skills.Fireball, color: '#FF5733' },
@@ -58,13 +59,11 @@ const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
     const [updateTrigger, setUpdateTrigger] = useState(false);
 
     useEffect(() => {
-        // todo: bug - why this doesn't get triggered for a second battle
         k?.on(Events.StartBattle, Tags.Player, (_, player, enemy: Enemy) => {
-            console.log(`ENEMY: ${enemy.battleGameObj.id}`)
             setPlayer(player);
             setEnemy(enemy);
         });
-    }, [k]);
+    });
 
     const handleSkill = (skillName: Skills) => {
         // console.log(player?.battleGameObj.health);
@@ -105,7 +104,8 @@ const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
                         </SkillCard>
                     ))}
                 </SkillsGridContainer>
-                <a>Player HP: {player?.health} | Enemy HP: {enemy?.health}</a>
+                <HealthDisplay label="Player" currentHealth={player!.health} maxHealth={player!.maxHealth} />
+                <HealthDisplay label="Enemy" currentHealth={enemy!.health} maxHealth={enemy!.maxHealth} />
             </Wrapper>
             :
             <Wrapper>

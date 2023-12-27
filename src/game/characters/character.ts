@@ -14,6 +14,7 @@ export default abstract class Character {
 
     id: number | undefined = undefined;
     abstract health: number;
+    abstract maxHealth: number;
     public gameObj: GameObj<SpriteComp | PosComp | ScaleComp | AreaComp | BodyComp>;
     public battleGameObj: GameObj;
     public movement: Movement;
@@ -59,8 +60,10 @@ export default abstract class Character {
 
     takeDamage = (amount: number) => {
         this.health -= amount;
-        if (this.health <= 0)
+        if (this.health <= 0) {
+            this.health = 0
             this.destroy();
+        }
     };
 
     isAlive = (): boolean => this.health > 0;

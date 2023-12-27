@@ -16,12 +16,17 @@ export enum Sprites {
     GreySquirrel2 = "grey-squirrel-2",
     VersusOverlay = "versus-overlay",
     BattleBackground = "battle-background",
+    DefeatedBackground = "defeated-background",
     Fireball = "fireball",
+    Thunderbolt = "thunderbolt",
+    IceShard = "ice-shard",
+    Earthquake = "earthquake",
 }
 
 export enum Scenes {
     Forest1 = "forest-1",
     Battle = "battle",
+    Defeated = "defeated",
 }
 
 export enum Sounds {

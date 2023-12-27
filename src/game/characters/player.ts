@@ -4,6 +4,7 @@ import Character from "./character";
 export default class Player extends Character {
     sprite = Sprites.RedSquirrel;
     health = 200;
+    maxHealth = 200;
 
     battleSpawn = () => {
         this.battleGameObj = this.k.add([

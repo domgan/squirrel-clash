@@ -20,3 +20,13 @@ export const setBattleBackground = (k: KaboomCtx) => {
         k.fixed()
     ]);
 };
+
+export const setDefeatedBackground = (k: KaboomCtx) => {
+    k.add([
+        k.sprite(Sprites.DefeatedBackground),
+        k.pos(k.width() / 2, k.height() / 2),
+        k.anchor("center"),
+        k.scale(1.6),
+        k.fixed()
+    ]);
+};

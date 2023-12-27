@@ -8,8 +8,11 @@ const loadSprites = (k: KaboomCtx) => {
     k.loadSprite(Sprites.RedSquirrel, "generated/red-squirrel.png");
     k.loadSprite(Sprites.GreySquirrel1, "generated/grey-squirrel-soldier-1.png");
     k.loadSprite(Sprites.GreySquirrel2, "generated/grey-squirrel-soldier-2.png");
-    k.loadSprite(Sprites.BattleBackground, "battle-background.png");
+    k.loadSprite(Sprites.BattleBackground, "generated/battle-background.png");
+    k.loadSprite(Sprites.DefeatedBackground, "defeated-background.png");
     k.loadSprite(Sprites.Fireball, "fireball.png");
+    k.loadSprite(Sprites.Thunderbolt, "thunderbolt.png");
+    k.loadSprite(Sprites.IceShard, "ice-shard.png");
 };
 
 export const getSprite = (obj: GameObj) => {

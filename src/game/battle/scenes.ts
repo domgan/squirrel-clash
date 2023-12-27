@@ -17,7 +17,7 @@ export const forestBattleScene = (k: KaboomCtx, setIsBattle: (isBattle: boolean)
 
         player.battleGameObj.on(Events.PlayerBattleAction, (skill: Skills) => {
             // todo: improve - reduce num of args
-            combat(k, player, enemy, skill);
+            void combat(k, player, enemy, skill);
         });
     });
 };
