@@ -4,7 +4,7 @@ import { Skills, Events, Tags } from "./game/constants";
 import { MutableRefObject, useEffect, useState } from "react";
 import Player from "./game/characters/player";
 import Enemy from "./game/characters/enemy";
-import HealthDisplay from "./components/HealthDisplay";
+import StatusDisplay from "./components/StatusDisplay";
 
 const skills = [
     { name: Skills.Fireball, color: '#FF5733' },
@@ -97,15 +97,14 @@ const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
             ?
             <Wrapper>
                 <Header>Battle Skills</Header>
-                <SkillsGridContainer disabled={!isPlayerTurn}>
+                <SkillsGridContainer disabled={!isPlayerTurn || !player!.canUseSkill(25)}>
                     {skills.map((skill, index) => (
                         <SkillCard key={index} color={skill.color} onClick={() => handleSkill(skill.name)}>
                             {skill.name}
                         </SkillCard>
                     ))}
                 </SkillsGridContainer>
-                <HealthDisplay label="Player" currentHealth={player!.health} maxHealth={player!.maxHealth} />
-                <HealthDisplay label="Enemy" currentHealth={enemy!.health} maxHealth={enemy!.maxHealth} />
+                <StatusDisplay player={player!} enemy={enemy!} />
             </Wrapper>
             :
             <Wrapper>

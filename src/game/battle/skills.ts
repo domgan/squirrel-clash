@@ -4,15 +4,16 @@ import { Skills, Sprites } from "../constants";
 
 type Damage = number;
 type Speed = number;
-const skillsData: Record<Skills, [Sprites, Damage, Speed]> = {
-    [Skills.Fireball]: [Sprites.Fireball, 50, 400],
-    [Skills.Thunderbolt]: [Sprites.Thunderbolt, 75, 800],
-    [Skills.IceShard]: [Sprites.IceShard, 25, 600],
-    [Skills.Earthquake]: [Sprites.Earthquake, 95, 120],
+type Mana = number;
+const skillsData: Record<Skills, [Sprites, Damage, Speed, Mana]> = {
+    [Skills.Fireball]: [Sprites.Fireball, 50, 400, 50],
+    [Skills.Thunderbolt]: [Sprites.Thunderbolt, 75, 800, 75],
+    [Skills.IceShard]: [Sprites.IceShard, 25, 600, 25],
+    [Skills.Earthquake]: [Sprites.Earthquake, 95, 120, 100],
 };
 
-export const launchProjectile = (k: KaboomCtx, skill: Skills, from: GameObj, to: GameObj, down = false): Damage => {
-    const [sprite, damage, speed] = skillsData[skill];
+export const launchProjectile = (k: KaboomCtx, skill: Skills, from: GameObj, to: GameObj, down = false): [Damage, Mana] => {
+    const [sprite, damage, speed, mana] = skillsData[skill];
     const projectile = addAtSourceObj(k, sprite, from, down);
     const direction = k.vec2(
         to.pos.x - from.pos.x,
@@ -22,7 +23,7 @@ export const launchProjectile = (k: KaboomCtx, skill: Skills, from: GameObj, to:
     const normalizedDirection = k.vec2(direction.x / distance, direction.y / distance);
 
     projectile.onUpdate(() => handleSendProjectile(projectile, to, normalizedDirection, speed));
-    return damage;
+    return [damage, mana];
 };
 
 const addAtSourceObj = (k: KaboomCtx, sprite: Sprites, sourceObj: GameObj, down = false) => {
@@ -38,12 +39,12 @@ const addAtSourceObj = (k: KaboomCtx, sprite: Sprites, sourceObj: GameObj, down 
     return gameObj;
 };
 
-export const triggerEarthquake = (k: KaboomCtx, at: GameObj): Damage => {
-    const [sprite, damage, speed] = skillsData[Skills.Earthquake];
+export const triggerEarthquake = (k: KaboomCtx, at: GameObj): [Damage, Mana] => {
+    const [sprite, damage, speed, mana] = skillsData[Skills.Earthquake];
     const earthquakeObj = addAtSourceObj(k, sprite, at);
     k.shake(speed);
     k.wait(2, () => {
         earthquakeObj.destroy();
     });
-    return damage;
+    return [damage, mana];
 };

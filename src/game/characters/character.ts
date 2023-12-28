@@ -12,9 +12,11 @@ export default abstract class Character {
     protected areaScale: number;
     protected mass: number;
 
-    id: number | undefined = undefined;
     abstract health: number;
     abstract maxHealth: number;
+    abstract mana: number;
+    abstract maxMana: number;
+
     public gameObj: GameObj<SpriteComp | PosComp | ScaleComp | AreaComp | BodyComp>;
     public battleGameObj: GameObj;
     public movement: Movement;
@@ -65,6 +67,15 @@ export default abstract class Character {
             this.destroy();
         }
     };
+
+    takeMana = (amount: number) => {
+        this.mana -= amount;
+        if (this.mana <= 0) {
+            this.mana = 0
+        }
+    };
+
+    canUseSkill = (reqMana: number) => reqMana <= this.mana;
 
     isAlive = (): boolean => this.health > 0;
 

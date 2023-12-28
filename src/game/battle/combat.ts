@@ -9,8 +9,9 @@ const ANIMATION_TIME = 2; // todo: handle this in a better way
 
 export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: Skills) => {
     // todo: use kaboom states https://kaboomjs.com/#StateComp
-    const damage = handleSkills(k, skill, player.battleGameObj, enemy.battleGameObj);
+    const [damage, mana] = handleSkills(k, skill, player.battleGameObj, enemy.battleGameObj);
     await k.wait(ANIMATION_TIME);
+    player.takeMana(mana);
     enemy.takeDamage(damage);
     player.battleGameObj.trigger(Events.PlayerBattleActionFinished, player, enemy)
 
@@ -28,12 +29,13 @@ export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: 
 
 const enemyAction = async (k: KaboomCtx, player: Player, enemy: Enemy) => {
     const randomSkill = getRandomSkill();
-    let damage = 0;
+    let [damage, mana] = [0, 0];
     if (randomSkill === Skills.Earthquake)
-        damage = triggerEarthquake(k, player.battleGameObj);
+        [damage, mana] = triggerEarthquake(k, player.battleGameObj);
     else
-        damage = launchProjectile(k, getRandomSkill(), enemy.battleGameObj, player.battleGameObj, true);
+        [damage, mana] = launchProjectile(k, randomSkill, enemy.battleGameObj, player.battleGameObj, true);
     await k.wait(ANIMATION_TIME);
+    enemy.takeMana(mana);
     player.takeDamage(damage);
     if (!player.isAlive()) {
         k.go(Scenes.Defeated);

@@ -3,8 +3,12 @@ import Character from "./character";
 
 export default class Player extends Character {
     sprite = Sprites.RedSquirrel;
+
     health = 200;
     maxHealth = 200;
+
+    mana = 200;
+    maxMana = 200;
 
     battleSpawn = () => {
         this.battleGameObj = this.k.add([
