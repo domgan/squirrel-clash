@@ -50,7 +50,11 @@ export const triggerEarthquake = (k: KaboomCtx, at: GameObj): [Damage, Mana] => 
     return [damage, mana];
 };
 
-export const rest = (character: Character) => {
+export const rest = (k: KaboomCtx, character: Character) => {
+    const heartObj = addAtSourceObj(k, Sprites.Heart, character.battleGameObj, true);
     character.health = character.maxHealth;
     character.mana = character.maxMana;
+    k.wait(2, () => {
+        heartObj.destroy();
+    });
 };

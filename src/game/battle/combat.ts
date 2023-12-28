@@ -10,7 +10,7 @@ const ANIMATION_TIME = 2; // todo: handle this in a better way
 export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: Skills | SkillsSupport) => {
     // todo: use kaboom states https://kaboomjs.com/#StateComp
     if (skill === SkillsSupport.Rest) {
-        rest(player);
+        rest(k, player);
         await k.wait(ANIMATION_TIME);
     } else {
         const [damage, mana] = handleSkills(k, skill, player.battleGameObj, enemy.battleGameObj);
@@ -34,7 +34,7 @@ export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: 
 
 const enemyAction = async (k: KaboomCtx, player: Player, enemy: Enemy) => {
     if (enemy.mana <= 0) {
-        rest(enemy);
+        rest(k, enemy);
         await k.wait(ANIMATION_TIME);
         return;
     };

@@ -21,6 +21,7 @@ export enum Sprites {
     Thunderbolt = "thunderbolt",
     IceShard = "ice-shard",
     Earthquake = "earthquake",
+    Heart = "heart",
 }
 
 export enum Scenes {
