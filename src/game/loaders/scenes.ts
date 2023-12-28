@@ -4,6 +4,6 @@ import { forestBattleScene } from "../battle/scenes";
 
 export const registerScenes = (k: KaboomCtx, setIsBattle: (b: boolean) => void) => {
     forest1Scene(k, setIsBattle);
-    defeatedScene(k);
+    defeatedScene(k, setIsBattle);
     forestBattleScene(k, setIsBattle)
 };

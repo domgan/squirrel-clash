@@ -1,7 +1,7 @@
 import { KaboomCtx } from "kaboom";
 import { Events, Scenes, Skills } from "../constants";
 import { handleSkills } from "./events/onUpdateEvents";
-import { launchProjectile } from "./skills";
+import { launchProjectile, triggerEarthquake } from "./skills";
 import Player from "../characters/player";
 import Enemy from "../characters/enemy";
 
@@ -27,8 +27,12 @@ export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: 
 };
 
 const enemyAction = async (k: KaboomCtx, player: Player, enemy: Enemy) => {
-    // todo: enemy actions
-    const damage = launchProjectile(k, getRandomSkill(), enemy.battleGameObj, player.battleGameObj, true)
+    const randomSkill = getRandomSkill();
+    let damage = 0;
+    if (randomSkill === Skills.Earthquake)
+        damage = triggerEarthquake(k, player.battleGameObj);
+    else
+        damage = launchProjectile(k, getRandomSkill(), enemy.battleGameObj, player.battleGameObj, true);
     await k.wait(ANIMATION_TIME);
     player.takeDamage(damage);
     if (!player.isAlive()) {
@@ -37,7 +41,7 @@ const enemyAction = async (k: KaboomCtx, player: Player, enemy: Enemy) => {
 };
 
 const getRandomSkill = (): Skills => {
-    const skills = [Skills.Fireball, Skills.Thunderbolt, Skills.IceShard];
+    const skills = [Skills.Fireball, Skills.Thunderbolt, Skills.IceShard, Skills.Earthquake];
     const randomIndex = Math.floor(Math.random() * skills.length);
     return skills[randomIndex];
 };

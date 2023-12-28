@@ -27,8 +27,9 @@ export const forest1Scene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) =>
     });
 };
 
-export const defeatedScene = (k: KaboomCtx) => {
+export const defeatedScene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) => {
     k.scene(Scenes.Defeated, () => {
+        setIsBattle(false);
         setDefeatedBackground(k);
     });
 };

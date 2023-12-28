@@ -1,5 +1,5 @@
 import { GameObj, KaboomCtx, Vec2 } from "kaboom";
-import { launchProjectile } from "../skills";
+import { launchProjectile, triggerEarthquake } from "../skills";
 import { Skills } from "../../constants";
 
 export const handleSkills = (k: KaboomCtx, skill: Skills, player: GameObj, enemy: GameObj) => {
@@ -9,7 +9,9 @@ export const handleSkills = (k: KaboomCtx, skill: Skills, player: GameObj, enemy
         case Skills.Thunderbolt:
         case Skills.IceShard:
             damage = launchProjectile(k, skill, player, enemy);
-        // todo: rest of skills
+            break;
+        case Skills.Earthquake:
+            damage = triggerEarthquake(k, enemy);
     };
     return damage;
 };

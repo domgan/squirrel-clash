@@ -13,6 +13,7 @@ const loadSprites = (k: KaboomCtx) => {
     k.loadSprite(Sprites.Fireball, "fireball.png");
     k.loadSprite(Sprites.Thunderbolt, "thunderbolt.png");
     k.loadSprite(Sprites.IceShard, "ice-shard.png");
+    k.loadSprite(Sprites.Earthquake, "earthquake.png");
 };
 
 export const getSprite = (obj: GameObj) => {
