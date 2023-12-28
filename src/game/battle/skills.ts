@@ -1,6 +1,7 @@
 import { KaboomCtx, GameObj } from "kaboom";
 import { handleSendProjectile } from "./events/onUpdateEvents";
 import { Skills, Sprites } from "../constants";
+import Character from "../characters/character";
 
 type Damage = number;
 type Speed = number;
@@ -47,4 +48,9 @@ export const triggerEarthquake = (k: KaboomCtx, at: GameObj): [Damage, Mana] => 
         earthquakeObj.destroy();
     });
     return [damage, mana];
+};
+
+export const rest = (character: Character) => {
+    character.health = character.maxHealth;
+    character.mana = character.maxMana;
 };

@@ -1,18 +1,23 @@
 import { KaboomCtx } from "kaboom";
-import { Events, Scenes, Skills } from "../constants";
+import { Events, Scenes, Skills, SkillsSupport } from "../constants";
 import { handleSkills } from "./events/onUpdateEvents";
-import { launchProjectile, triggerEarthquake } from "./skills";
+import { launchProjectile, rest, triggerEarthquake } from "./skills";
 import Player from "../characters/player";
 import Enemy from "../characters/enemy";
 
 const ANIMATION_TIME = 2; // todo: handle this in a better way
 
-export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: Skills) => {
+export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: Skills | SkillsSupport) => {
     // todo: use kaboom states https://kaboomjs.com/#StateComp
-    const [damage, mana] = handleSkills(k, skill, player.battleGameObj, enemy.battleGameObj);
-    await k.wait(ANIMATION_TIME);
-    player.takeMana(mana);
-    enemy.takeDamage(damage);
+    if (skill === SkillsSupport.Rest) {
+        rest(player);
+        await k.wait(ANIMATION_TIME);
+    } else {
+        const [damage, mana] = handleSkills(k, skill, player.battleGameObj, enemy.battleGameObj);
+        await k.wait(ANIMATION_TIME);
+        player.takeMana(mana);
+        enemy.takeDamage(damage);
+    }
     player.battleGameObj.trigger(Events.PlayerBattleActionFinished, player, enemy)
 
     if (enemy.isAlive()) {
@@ -28,6 +33,11 @@ export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: 
 };
 
 const enemyAction = async (k: KaboomCtx, player: Player, enemy: Enemy) => {
+    if (enemy.mana <= 0) {
+        rest(enemy);
+        await k.wait(ANIMATION_TIME);
+        return;
+    };
     const randomSkill = getRandomSkill();
     let [damage, mana] = [0, 0];
     if (randomSkill === Skills.Earthquake)

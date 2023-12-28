@@ -40,6 +40,10 @@ export enum Skills {
     Earthquake = "Earthquake",
 }
 
+export enum SkillsSupport {
+    Rest = "Rest",
+}
+
 export enum Events {
     StartBattle = "start-battle",
     EndBattle = "end-battle",

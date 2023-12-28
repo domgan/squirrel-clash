@@ -1,6 +1,6 @@
 import { KaboomCtx } from "kaboom";
 import styled from "styled-components";
-import { Skills, Events, Tags } from "./game/constants";
+import { Skills, Events, Tags, SkillsSupport } from "./game/constants";
 import { MutableRefObject, useEffect, useState } from "react";
 import Player from "./game/characters/player";
 import Enemy from "./game/characters/enemy";
@@ -11,6 +11,7 @@ const skills = [
     { name: Skills.IceShard, color: '#33A1FD' },
     { name: Skills.Thunderbolt, color: '#FFD700' },
     { name: Skills.Earthquake, color: '#8B4513' },
+    { name: SkillsSupport.Rest, color: "silver" }
 ];
 
 const Wrapper = styled.div`
@@ -65,7 +66,7 @@ const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
         });
     });
 
-    const handleSkill = (skillName: Skills) => {
+    const handleSkill = (skillName: Skills | SkillsSupport) => {
         // console.log(player?.battleGameObj.health);
         player?.battleGameObj.trigger(Events.PlayerBattleAction, skillName);
         setIsPlayerTurn(false);

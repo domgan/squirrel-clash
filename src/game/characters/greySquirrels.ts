@@ -18,6 +18,6 @@ export class GreySquirrel2 extends Enemy {
     health = 100;
     maxHealth = 100;
 
-    mana = 100;
-    maxMana = 10;
+    mana = 75;
+    maxMana = 75;
 };
