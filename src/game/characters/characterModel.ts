@@ -8,7 +8,7 @@ export default abstract class Character {
     protected k: KaboomCtx;
 
     abstract sprite: Sprites;
-    protected position: Vec2;
+    protected initPosition: Vec2;
     protected scale: number;
     protected areaScale: number;
     protected mass: number;
@@ -24,13 +24,13 @@ export default abstract class Character {
 
     constructor(
         k: KaboomCtx,
-        position: [number, number],
+        initPosition: [number, number],
         mass: number = 1,
         scale: number = 0.2,
         areaScale: number = 0.6,
     ) {
         this.k = k;
-        this.position = k.vec2(...position);
+        this.initPosition = k.vec2(...initPosition);
         this.mass = mass;
         this.scale = scale;
         this.areaScale = areaScale;
@@ -48,7 +48,7 @@ export default abstract class Character {
     protected doSpawn(tag: Tags, flipX: boolean = false) {
         this.gameObj = this.k.add([
             this.k.sprite(this.sprite),
-            this.k.pos(this.position),
+            this.k.pos(this.gameObj.pos ?? this.initPosition),
             this.k.area({ scale: this.areaScale }),
             this.k.body({ mass: this.mass }),
             this.k.scale(this.scale),
@@ -64,7 +64,7 @@ export default abstract class Character {
     takeDamage = (amount: number) => {
         this.health -= amount;
         if (this.health <= 0) {
-            this.health = 0
+            this.health = 0;
             this.destroy();
         }
     };
@@ -72,7 +72,7 @@ export default abstract class Character {
     takeMana = (amount: number) => {
         this.mana -= amount;
         if (this.mana <= 0) {
-            this.mana = 0
+            this.mana = 0;
         }
     };
 
