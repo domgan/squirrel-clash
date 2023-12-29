@@ -10,6 +10,7 @@ const loadSprites = (k: KaboomCtx) => {
     k.loadSprite(Sprites.GreySquirrel2, "generated/grey-squirrel-soldier-2.png");
     k.loadSprite(Sprites.BattleBackground, "generated/battle-background.png");
     k.loadSprite(Sprites.DefeatedBackground, "defeated-background.png");
+    k.loadSprite(Sprites.WinBackground, "win-background.jpg");
     k.loadSprite(Sprites.Fireball, "fireball.png");
     k.loadSprite(Sprites.Thunderbolt, "thunderbolt.png");
     k.loadSprite(Sprites.IceShard, "ice-shard.png");

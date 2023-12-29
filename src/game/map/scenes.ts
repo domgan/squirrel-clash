@@ -1,10 +1,11 @@
 import { KaboomCtx } from "kaboom";
-import { setBackground, setDefeatedBackground } from "../background";
+import { setBackground, setDefeatedBackground, setWinBackground } from "../backgrounds";
 import { GreySquirrel1, GreySquirrel2 } from "../characters/greySquirrels";
 import Player from "../characters/player";
 import { generateWalls } from "../common/boundaries";
 import { Scenes } from "../constants";
 import { restoreCharacters } from "../gameState";
+import Enemy from "../characters/enemy";
 
 export const forest1Scene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) => {
     k.scene(Scenes.Forest1, (wasInitialized: boolean | undefined) => {
@@ -13,7 +14,10 @@ export const forest1Scene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) =>
         generateWalls(k);
 
         if (wasInitialized) {
-            restoreCharacters();
+            // todo: move to class
+            const restoredObjs = restoreCharacters();
+            if (restoredObjs.every((obj) => !(obj instanceof Enemy)))
+                k.go(Scenes.Win);
             return;
         };
 
@@ -31,5 +35,12 @@ export const defeatedScene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) =
     k.scene(Scenes.Defeated, () => {
         setIsBattle(false);
         setDefeatedBackground(k);
+    });
+};
+
+export const winScene = (k: KaboomCtx, setIsBattle: (b: boolean) => void) => {
+    k.scene(Scenes.Win, () => {
+        setIsBattle(false);
+        setWinBackground(k);
     });
 };

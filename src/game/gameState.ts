@@ -12,10 +12,10 @@ const charactersState: CharactersState = {
 };
 
 export const restoreCharacters = () => {
-    const gameObjects = charactersState.gameObjects;
+    const gameObjects = Array.from(charactersState.gameObjects.values());
     charactersState.gameObjects = new Map();
-    Array.from(gameObjects.values()).forEach(gameObj => gameObj.spawn());
-    return;
+    gameObjects.forEach(gameObj => gameObj.spawn());
+    return gameObjects;
 };
 
 export default charactersState;

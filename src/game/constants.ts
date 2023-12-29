@@ -17,6 +17,7 @@ export enum Sprites {
     VersusOverlay = "versus-overlay",
     BattleBackground = "battle-background",
     DefeatedBackground = "defeated-background",
+    WinBackground = "win-background",
     Fireball = "fireball",
     Thunderbolt = "thunderbolt",
     IceShard = "ice-shard",
@@ -28,6 +29,7 @@ export enum Scenes {
     Forest1 = "forest-1",
     Battle = "battle",
     Defeated = "defeated",
+    Win = "win",
 };
 
 export enum Sounds {

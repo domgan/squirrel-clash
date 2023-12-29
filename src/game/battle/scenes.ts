@@ -1,5 +1,5 @@
 import { KaboomCtx } from "kaboom";
-import { setBattleBackground } from "../background";
+import { setBattleBackground } from "../backgrounds";
 import Enemy from "../characters/enemy";
 import Player from "../characters/player";
 import { generateWalls } from "../common/boundaries";

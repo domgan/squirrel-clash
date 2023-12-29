@@ -30,3 +30,13 @@ export const setDefeatedBackground = (k: KaboomCtx) => {
         k.fixed()
     ]);
 };
+
+export const setWinBackground = (k: KaboomCtx) => {
+    k.add([
+        k.sprite(Sprites.WinBackground),
+        k.pos(k.width() / 2, k.height() / 2),
+        k.anchor("center"),
+        k.scale(0.7),
+        k.fixed()
+    ]);
+};
