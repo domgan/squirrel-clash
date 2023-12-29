@@ -1,19 +1,12 @@
-import { GameObj, KaboomCtx, Vec2 } from "kaboom";
-import { launchProjectile, triggerEarthquake } from "../skills";
-import { Skills } from "../../constants";
+import { GameObj, Vec2 } from "kaboom";
+import { DamageSkill, ProjectileDamageSkill } from "../../skills/skill";
+import { Earthquake } from "../../skills/damage";
 
-export const handleSkills = (k: KaboomCtx, skill: Skills, player: GameObj, enemy: GameObj) => {
-    let [damage, mana] = [0, 0];
-    switch (skill) {
-        case Skills.Fireball:
-        case Skills.Thunderbolt:
-        case Skills.IceShard:
-            [damage, mana] = launchProjectile(k, skill, player, enemy);
-            break;
-        case Skills.Earthquake:
-            [damage, mana] = triggerEarthquake(k, enemy);
-    };
-    return [damage, mana];
+export const handleSkills = (skill: DamageSkill, player: GameObj, enemy: GameObj) => {
+    if (skill instanceof ProjectileDamageSkill)
+        skill.launchProjectile(player, enemy);
+    else if (skill instanceof Earthquake)
+        skill.triggerEarthquake(enemy);
 };
 
 export const handleSendProjectile = (projectile: GameObj, target: GameObj, normalizedDirection: Vec2, speed: number) => {
@@ -22,7 +15,6 @@ export const handleSendProjectile = (projectile: GameObj, target: GameObj, norma
         (projectile.pos.x - target.pos.x) ** 2 + (projectile.pos.y - target.pos.y) ** 2
     );
 
-    if (distanceToTarget < 100) {
+    if (distanceToTarget < 100)
         projectile.destroy();
-    }
 };

@@ -7,7 +7,7 @@ export enum Tags {
     Character = "character",
     Player = "player",
     Enemy = "enemy",
-}
+};
 
 export enum Sprites {
     Ground = "ground",
@@ -22,28 +22,25 @@ export enum Sprites {
     IceShard = "ice-shard",
     Earthquake = "earthquake",
     Heart = "heart",
-}
+};
 
 export enum Scenes {
     Forest1 = "forest-1",
     Battle = "battle",
     Defeated = "defeated",
-}
+};
 
 export enum Sounds {
     VivaLaVida = "viva-la-vida"
-}
+};
 
-export enum Skills {
+export enum SkillNames {
     Fireball = "Fireball",
     IceShard = "Ice Shard",
     Thunderbolt = "Thunderbolt",
     Earthquake = "Earthquake",
-}
-
-export enum SkillsSupport {
     Rest = "Rest",
-}
+};
 
 export enum Events {
     StartBattle = "start-battle",
@@ -52,4 +49,4 @@ export enum Events {
     PlayerBattleActionFinished = "player-battle-action-finished",
     EnemyBattleAction = "enemy-battle-action",
     EnemyBattleActionFinished = "enemy-battle-action-finished",
-}
+};

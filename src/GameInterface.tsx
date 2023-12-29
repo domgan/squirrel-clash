@@ -1,11 +1,12 @@
 import { KaboomCtx } from "kaboom";
 import styled from "styled-components";
-import { Skills, Events, Tags, SkillsSupport } from "./game/constants";
+import { Events, Tags } from "./game/constants";
 import { MutableRefObject, useEffect, useState } from "react";
 import Player from "./game/characters/player";
 import Enemy from "./game/characters/enemy";
 import StatusDisplay from "./components/StatusDisplay";
 import SkillsDisplay from "./components/SkillsDisplay";
+import { Skill } from "./game/skills/skill";
 
 
 const Wrapper = styled.div`
@@ -28,7 +29,6 @@ type GameInterfaceProps = {
 };
 
 const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
-    k?.debug.fps();
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [player, setPlayer] = useState<Player>();
     const [enemy, setEnemy] = useState<Enemy>();
@@ -41,8 +41,7 @@ const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
         });
     });
 
-    const handleSkill = (skillName: Skills | SkillsSupport) => {
-        // console.log(player?.battleGameObj.health);
+    const handleSkill = (skillName: Skill) => {
         player?.battleGameObj.trigger(Events.PlayerBattleAction, skillName);
         setIsPlayerTurn(false);
 
@@ -73,7 +72,7 @@ const GameInterface = ({ k, canvasRef, isBattle }: GameInterfaceProps) => {
             ?
             <Wrapper>
                 <Header>Battle Skills</Header>
-                <SkillsDisplay isPlayerTurn={isPlayerTurn} player={player!} handleSkill={handleSkill} />
+                <SkillsDisplay k={k!} isPlayerTurn={isPlayerTurn} player={player!} handleSkill={handleSkill} />
                 <StatusDisplay player={player!} enemy={enemy!} />
             </Wrapper>
             :

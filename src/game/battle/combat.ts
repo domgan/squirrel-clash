@@ -1,23 +1,25 @@
 import { KaboomCtx } from "kaboom";
-import { Events, Scenes, Skills, SkillsSupport } from "../constants";
+import { Events, Scenes } from "../constants";
 import { handleSkills } from "./events/onUpdateEvents";
-import { launchProjectile, rest, triggerEarthquake } from "./skills";
 import Player from "../characters/player";
 import Enemy from "../characters/enemy";
+import { DamageSkill, ProjectileDamageSkill, Skill } from "../skills/skill";
+import { Rest } from "../skills/support";
+import { Earthquake, Fireball, IceShard, Thunderbolt } from "../skills/damage";
 
 const ANIMATION_TIME = 2; // todo: handle this in a better way
 
-export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: Skills | SkillsSupport) => {
+export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: Skill) => {
     // todo: use kaboom states https://kaboomjs.com/#StateComp
-    if (skill === SkillsSupport.Rest) {
-        rest(k, player);
+    if (skill instanceof Rest) { // todo: move
+        skill.rest(player);
         await k.wait(ANIMATION_TIME);
-    } else {
-        const [damage, mana] = handleSkills(k, skill, player.battleGameObj, enemy.battleGameObj);
+    } else if (skill instanceof DamageSkill) {
+        handleSkills(skill, player.battleGameObj, enemy.battleGameObj);
         await k.wait(ANIMATION_TIME);
-        player.takeMana(mana);
-        enemy.takeDamage(damage);
-    }
+        player.takeMana(skill.reqMana);
+        enemy.takeDamage(skill.damage);
+    };
     player.battleGameObj.trigger(Events.PlayerBattleActionFinished, player, enemy)
 
     if (enemy.isAlive()) {
@@ -34,26 +36,25 @@ export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: 
 
 const enemyAction = async (k: KaboomCtx, player: Player, enemy: Enemy) => {
     if (enemy.mana <= 0) {
-        rest(k, enemy);
+        new Rest(k).rest(enemy);
         await k.wait(ANIMATION_TIME);
         return;
     };
-    const randomSkill = getRandomSkill();
-    let [damage, mana] = [0, 0];
-    if (randomSkill === Skills.Earthquake)
-        [damage, mana] = triggerEarthquake(k, player.battleGameObj);
-    else
-        [damage, mana] = launchProjectile(k, randomSkill, enemy.battleGameObj, player.battleGameObj, true);
+    const randomSkill = getRandomSkill(k);
+    if (randomSkill instanceof Earthquake)
+        randomSkill.triggerEarthquake(player.battleGameObj);
+    else if (randomSkill instanceof ProjectileDamageSkill)
+        randomSkill.launchProjectile(enemy.battleGameObj, player.battleGameObj, true);
     await k.wait(ANIMATION_TIME);
-    enemy.takeMana(mana);
-    player.takeDamage(damage);
+    enemy.takeMana(randomSkill.reqMana);
+    player.takeDamage(randomSkill.damage);
     if (!player.isAlive()) {
         k.go(Scenes.Defeated);
     };
 };
 
-const getRandomSkill = (): Skills => {
-    const skills = [Skills.Fireball, Skills.Thunderbolt, Skills.IceShard, Skills.Earthquake];
+const getRandomSkill = (k: KaboomCtx): DamageSkill => {
+    const skills = [Fireball, Thunderbolt, IceShard, Earthquake];
     const randomIndex = Math.floor(Math.random() * skills.length);
-    return skills[randomIndex];
+    return new skills[randomIndex](k);
 };
