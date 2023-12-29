@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Player from "../game/characters/player";
 import { Fireball, Thunderbolt, IceShard, Earthquake } from "../game/skills/damage";
 import { Rest } from "../game/skills/support";
-import { Skill } from "../game/skills/skillModel";
+import { DamageSkill, Skill } from "../game/skills/skillModel";
 import { KaboomCtx } from "kaboom";
 
 const SkillsGridContainer = styled.div`
@@ -43,12 +43,14 @@ const SkillsDisplay = ({ k, isPlayerTurn, player, handleSkill }: SkillsProps) =>
     <SkillsGridContainer>
         {skillPairs.map((skillPair, index) => {
             const skill = new skillPair.skill(k);
+            const tooltipFunctionality = skill instanceof DamageSkill ? `Damage: ${skill.damage}` : `Regenerate health and mana`;
             return (
                 <SkillCard
                     key={index}
                     color={skillPair.color}
                     onClick={() => handleSkill(skill)}
                     disabled={!isPlayerTurn || !player.canUseSkill(skill)}
+                    title={`Required Mana: ${skill.reqMana}, ${tooltipFunctionality}`}
                 >
                     {skill.name}
                 </SkillCard>
