@@ -1,6 +1,6 @@
 import { GameObj } from "kaboom";
 import { SkillNames, Sprites } from "../constants";
-import { DamageSkill, ProjectileDamageSkill } from "./skill";
+import { DamageSkill, ProjectileDamageSkill } from "./skillModel";
 
 export class Fireball extends ProjectileDamageSkill {
     name = SkillNames.Fireball;

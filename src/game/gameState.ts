@@ -1,5 +1,5 @@
 import { GameObj, GameObjID } from "kaboom";
-import Character from "./characters/character";
+import Character from "./characters/characterModel";
 
 type CharactersState = {
     playerBattleObj?: GameObj,

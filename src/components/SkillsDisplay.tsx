@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Player from "../game/characters/player";
 import { Fireball, Thunderbolt, IceShard, Earthquake } from "../game/skills/damage";
 import { Rest } from "../game/skills/support";
-import { Skill } from "../game/skills/skill";
+import { Skill } from "../game/skills/skillModel";
 import { KaboomCtx } from "kaboom";
 
 const SkillsGridContainer = styled.div`
@@ -25,11 +25,11 @@ const SkillCard = styled.button<{ color: string; disabled: boolean }>`
 `;
 
 const skillPairs = [
-    { class: Fireball, color: '#FF5733' },
-    { class: IceShard, color: '#33A1FD' },
-    { class: Thunderbolt, color: '#FFD700' },
-    { class: Earthquake, color: '#8B4513' },
-    { class: Rest, color: "silver" },
+    { skill: Fireball, color: '#FF5733' },
+    { skill: IceShard, color: '#33A1FD' },
+    { skill: Thunderbolt, color: '#FFD700' },
+    { skill: Earthquake, color: '#8B4513' },
+    { skill: Rest, color: "silver" },
 ];
 
 type SkillsProps = {
@@ -42,13 +42,13 @@ type SkillsProps = {
 const SkillsDisplay = ({ k, isPlayerTurn, player, handleSkill }: SkillsProps) => (
     <SkillsGridContainer>
         {skillPairs.map((skillPair, index) => {
-            const skill = new skillPair.class(k);
+            const skill = new skillPair.skill(k);
             return (
                 <SkillCard
                     key={index}
                     color={skillPair.color}
                     onClick={() => handleSkill(skill)}
-                    disabled={!isPlayerTurn || !player.canUseSkill(skill.reqMana)}
+                    disabled={!isPlayerTurn || !player.canUseSkill(skill)}
                 >
                     {skill.name}
                 </SkillCard>

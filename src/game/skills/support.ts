@@ -1,6 +1,6 @@
-import Character from "../characters/character";
+import Character from "../characters/characterModel";
 import { SkillNames, Sprites } from "../constants";
-import { SupportSkill } from "./skill";
+import { SupportSkill } from "./skillModel";
 
 export class Rest extends SupportSkill {
     sprite = Sprites.Heart;

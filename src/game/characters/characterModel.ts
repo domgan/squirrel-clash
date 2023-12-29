@@ -2,6 +2,7 @@ import { KaboomCtx, Vec2, GameObj, AreaComp, BodyComp, PosComp, ScaleComp, Sprit
 import { Sprites, Tags } from "../constants";
 import charactersState from "../gameState";
 import Movement from "./movement";
+import { Skill } from "../skills/skillModel";
 
 export default abstract class Character {
     protected k: KaboomCtx;
@@ -75,7 +76,7 @@ export default abstract class Character {
         }
     };
 
-    canUseSkill = (reqMana: number) => reqMana <= this.mana;
+    canUseSkill = (skill: Skill) => skill.reqMana <= this.mana;
 
     isAlive = (): boolean => this.health > 0;
 

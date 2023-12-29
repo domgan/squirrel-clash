@@ -1,5 +1,5 @@
 import { Sprites, Tags } from "../constants";
-import Character from "./character";
+import Character from "./characterModel";
 
 export default class Player extends Character {
     sprite = Sprites.RedSquirrel;

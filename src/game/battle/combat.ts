@@ -3,7 +3,7 @@ import { Events, Scenes } from "../constants";
 import { handleSkills } from "./events/onUpdateEvents";
 import Player from "../characters/player";
 import Enemy from "../characters/enemy";
-import { DamageSkill, ProjectileDamageSkill, Skill } from "../skills/skill";
+import { DamageSkill, ProjectileDamageSkill, Skill } from "../skills/skillModel";
 import { Rest } from "../skills/support";
 import { Earthquake, Fireball, IceShard, Thunderbolt } from "../skills/damage";
 
@@ -35,16 +35,16 @@ export const combat = async (k: KaboomCtx, player: Player, enemy: Enemy, skill: 
 };
 
 const enemyAction = async (k: KaboomCtx, player: Player, enemy: Enemy) => {
-    if (enemy.mana <= 0) {
-        new Rest(k).rest(enemy);
+    const randomSkill = getRandomSkill(k);
+    if (randomSkill instanceof Earthquake && enemy.canUseSkill(randomSkill))
+        randomSkill.triggerEarthquake(player.battleGameObj);
+    else if (randomSkill instanceof ProjectileDamageSkill && enemy.canUseSkill(randomSkill))
+        randomSkill.launchProjectile(enemy.battleGameObj, player.battleGameObj, true);
+    else {
         await k.wait(ANIMATION_TIME);
+        new Rest(k).rest(enemy);
         return;
     };
-    const randomSkill = getRandomSkill(k);
-    if (randomSkill instanceof Earthquake)
-        randomSkill.triggerEarthquake(player.battleGameObj);
-    else if (randomSkill instanceof ProjectileDamageSkill)
-        randomSkill.launchProjectile(enemy.battleGameObj, player.battleGameObj, true);
     await k.wait(ANIMATION_TIME);
     enemy.takeMana(randomSkill.reqMana);
     player.takeDamage(randomSkill.damage);

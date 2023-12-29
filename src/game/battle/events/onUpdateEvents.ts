@@ -1,5 +1,5 @@
 import { GameObj, Vec2 } from "kaboom";
-import { DamageSkill, ProjectileDamageSkill } from "../../skills/skill";
+import { DamageSkill, ProjectileDamageSkill } from "../../skills/skillModel";
 import { Earthquake } from "../../skills/damage";
 
 export const handleSkills = (skill: DamageSkill, player: GameObj, enemy: GameObj) => {

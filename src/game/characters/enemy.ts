@@ -1,4 +1,4 @@
-import Character from "./character";
+import Character from "./characterModel";
 import { startBattle } from "../map/events/collisionEvents";
 import { Tags } from "../constants";
 

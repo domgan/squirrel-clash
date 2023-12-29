@@ -5,7 +5,7 @@ import Player from "../characters/player";
 import { generateWalls } from "../common/boundaries";
 import { Scenes, Events } from "../constants";
 import { combat } from "./combat";
-import { Skill } from "../skills/skill";
+import { Skill } from "../skills/skillModel";
 
 export const forestBattleScene = (k: KaboomCtx, setIsBattle: (isBattle: boolean) => void) => {
     k.scene(Scenes.Battle, (player: Player, enemy: Enemy) => {

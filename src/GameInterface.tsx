@@ -6,7 +6,7 @@ import Player from "./game/characters/player";
 import Enemy from "./game/characters/enemy";
 import StatusDisplay from "./components/StatusDisplay";
 import SkillsDisplay from "./components/SkillsDisplay";
-import { Skill } from "./game/skills/skill";
+import { Skill } from "./game/skills/skillModel";
 
 
 const Wrapper = styled.div`
